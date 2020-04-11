@@ -1,106 +1,56 @@
-openapi: "3.0.1"
+---
+swagger: "2.0"
 info:
+  version: "2020-04-11T03:54:05Z"
   title: "GameShopPro"
-  version: "2020-04-11T01:17:45Z"
-servers:
-- url: "https://udiuhnbfvf.execute-api.us-east-2.amazonaws.com/{basePath}"
-  variables:
-    basePath:
-      default: "/github"
+host: "udiuhnbfvf.execute-api.us-east-2.amazonaws.com"
+basePath: "/Test"
+schemes:
+- "https"
 paths:
-  /users:
-    get:
-      responses:
-        200:
-          description: "200 response"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-            responseTemplates:
-              application/json: "[\n {\n    \"name\": \"Chris Snyder\",\n    \"email\"\
-                :\"basilard99@gmail.com\",\n    \"userId\":\"7b99059f-62b1-4108-8a04-f7d906a8160d\"\
-                ,\n    \"_links\":{\n        \"self\":\"/users/7b99059f-62b1-4108-8a04-f7d906a8160d\"\
-                \n    }\n },\n {\n    \"name\": \"Jesse Busch\",\n    \"email\":\"\
-                jesse@nodomain.com\",\n    \"userId\":\"cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"\
-                ,\n    \"_links\":{\n        \"self\":\"/users/cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"\
-                \n    }\n }\n]"
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        passthroughBehavior: "when_no_match"
-        type: "mock"
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-        required: true
-      responses:
-        201:
-          description: "201 response"
-          headers:
-            Location:
-              schema:
-                type: "string"
-          content: {}
-      x-amazon-apigateway-request-validator: "Validate body"
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "201"
-            responseParameters:
-              method.response.header.Location: "'/user/7b99059f-62b1-4108-8a04-f7d906a8160d'"
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        passthroughBehavior: "when_no_templates"
-        type: "mock"
   /shops:
     get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
       responses:
         200:
           description: "200 response"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Shop"
+          schema:
+            $ref: "#/definitions/Shop"
       x-amazon-apigateway-integration:
         responses:
           default:
             statusCode: "200"
             responseTemplates:
               application/json: "[\n    {\n        \"name\": \"Phantom of the Attic\"\
-                ,\n        \"primaryEmail\":\"test@pota.com\",\n        \"uuid\":\"\
-                9b70ba73-165c-44b4-a0a0-3acffaab19b7\",\n        \"_links\": [\n \
-                \           {\n                \"self\":\"/Test/shops/9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\
+                ,\n        \"primaryEmail\":\"test@pota.com\",\n        \"_links\"\
+                : [\n            {\n                \"self\":\"/Test/shops/9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\
                 \n            }\n        ]\n    },\n     {\n        \"name\": \"Drawbridge\
                 \ Games\",\n        \"primaryEmail\":\"test@drawbridgegames.com\"\
-                ,\n        \"uuid\":\"726c34d6-3e69-4788-a937-97e416c0626c\",\n  \
-                \      \"_links\": [\n            {\n                \"self\":\"/Test/shops/726c34d6-3e69-4788-a937-97e416c0626c\"\
-                \n            }\n        ]\n    }\n]"
+                ,\n        \"_links\": [\n            {\n                \"self\"\
+                :\"/Test/shops/726c34d6-3e69-4788-a937-97e416c0626c\"\n          \
+                \  }\n        ]\n    }\n]"
         requestTemplates:
           application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_match"
         type: "mock"
     post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Shop"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "Shop"
         required: true
+        schema:
+          $ref: "#/definitions/Shop"
       responses:
         201:
           description: "201 response"
           headers:
             Location:
-              schema:
-                type: "string"
-          content: {}
+              type: "string"
       x-amazon-apigateway-request-validator: "Validate body"
       x-amazon-apigateway-integration:
         responses:
@@ -112,117 +62,57 @@ paths:
           application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_templates"
         type: "mock"
-  /users/{userId}:
-    get:
-      parameters:
-      - name: "userId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      responses:
-        200:
-          description: "200 response"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-            responseTemplates:
-              application/json: "#set($userId = $input.params('userId'))\n#if($userId\
-                \ == '7b99059f-62b1-4108-8a04-f7d906a8160d')\n{\n  \"name\" : \"Chris\
-                \ Snyder\",\n  \"email\" : \"basilard99@gmail.com\",\n  \"userId\"\
-                : \"7b99059f-62b1-4108-8a04-f7d906a8160d\",\n  \"_links\": {\n   \
-                \     \"self\": \"/users/7b99059f-62b1-4108-8a04-f7d906a8160d\"\n\
-                \    }\n}\n#elseif($userId == 'cbd22a8f-31d6-42f7-81d9-cfff3e604b14')\n\
-                {\n  \"name\": \"Jesse Busch\",\n  \"email\": \"jesse@nodomain.com\"\
-                ,\n  \"userId\": \"cbd22a8f-31d6-42f7-81d9-cfff3e604b14\",\n  \"_links\"\
-                : {\n     \"self\": \"/users/cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"\
-                \n  }\n}\n#end"
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        passthroughBehavior: "when_no_templates"
-        type: "mock"
-    put:
-      parameters:
-      - name: "userId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-        required: true
-      responses:
-        204:
-          description: "204 response"
-          content: {}
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "204"
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        passthroughBehavior: "when_no_templates"
-        type: "mock"
   /shops/{shopId}:
     get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
       parameters:
       - name: "shopId"
         in: "path"
         required: true
-        schema:
-          type: "string"
+        type: "string"
       responses:
         200:
           description: "200 response"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Shop"
+          schema:
+            $ref: "#/definitions/Shop"
       x-amazon-apigateway-integration:
         responses:
           default:
             statusCode: "200"
             responseTemplates:
               application/json: "#set($shopId = $input.params('shopId'))\n#if($shopId\
-                \ == '726c34d6-3e69-4788-a937-97e416c0626c')\n{\n  \"name\": \"Drawbridge\
-                \ Games\",\n  \"primaryEmail\": \"test@drawbridgegames.com\",\n  \"\
-                uuid\": \"726c34d6-3e69-4788-a937-97e416c0626c\",\n  \"links\": [{\
-                \ \"self\":\"/Test/shops/726c34d6-3e69-4788-a937-97e416c0626c\"]\n\
-                }\n#elseif($shopId == '9b70ba73-165c-44b4-a0a0-3acffaab19b7')\n{\n\
-                \  \"name\" : \"Phantom of the Attic\",\n  \"primaryEmail\" : \"test@pota.com\"\
-                \n}\n#end"
+                \ == \"726c34d6-3e69-4788-a937-97e416c0626c\")\n{\n  \"name\": \"\
+                Drawbridge Games\",\n  \"primaryEmail\": \"test@drawbridgegames.com\"\
+                ,\n  \"_links\": [\n        {\"self\":\"/Test/shops/726c34d6-3e69-4788-a937-97e416c0626c\"\
+                }\n    ]\n}\n#elseif($shopId == \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\
+                )\n{\n  \"name\" : \"Phantom of the Attic\",\n  \"primaryEmail\" :\
+                \ \"test@pota.com\",\n  \"_links\": [\n    {\"self\":\"/Test/shops/9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\
+                }\n  ]\n}\n#end"
         requestTemplates:
           application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_templates"
         type: "mock"
     put:
+      consumes:
+      - "application/json"
       parameters:
       - name: "shopId"
         in: "path"
         required: true
-        schema:
-          type: "string"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Shop"
+        type: "string"
+      - in: "body"
+        name: "Shop"
         required: true
+        schema:
+          $ref: "#/definitions/Shop"
       responses:
-        404:
-          description: "404 response"
-          content: {}
         204:
           description: "204 response"
-          content: {}
+        404:
+          description: "404 response"
       x-amazon-apigateway-request-validator: "Validate body"
       x-amazon-apigateway-integration:
         responses:
@@ -232,74 +122,163 @@ paths:
           application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_templates"
         type: "mock"
-components:
-  schemas:
-    Shop:
-      title: "Shop Schema"
-      required:
-      - "name"
-      - "primaryEmail"
-      - "uuid"
-      type: "object"
-      properties:
-        name:
-          maxLength: 40
-          minLength: 3
+  /users:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/User"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseTemplates:
+              application/json: "[\n {\n    \"name\": \"Chris Snyder\",\n    \"email\"\
+                :\"basilard99@gmail.com\",\n    \"userId\":\"basilard99\",\n    \"\
+                linkedShopIds\":[\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\
+                ,\n        \"726c34d6-3e69-4788-a937-97e416c0626c\"\n    ],\n    \"\
+                _links\":[\n        {\"self\":\"/users/7b99059f-62b1-4108-8a04-f7d906a8160d\"\
+                }\n    ]\n },\n {\n    \"name\": \"Jesse Busch\",\n    \"email\":\"\
+                jesse@nodomain.com\",\n    \"userId\":\"jbusch\",\n    \"linkedShopIds\"\
+                :[\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\n    ],\n   \
+                \ \"_links\":[\n        {\"self\":\"/users/cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"\
+                }\n    ]\n }\n]"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+    post:
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "User"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        201:
+          description: "201 response"
+          headers:
+            Location:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "201"
+            responseParameters:
+              method.response.header.Location: "'/user/7b99059f-62b1-4108-8a04-f7d906a8160d'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_templates"
+        type: "mock"
+  /users/{userId}:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/User"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseTemplates:
+              application/json: "#set($userId = $input.params('userId'))\n#if($userId\
+                \ == \"7b99059f-62b1-4108-8a04-f7d906a8160d\")\n{\n  \"name\" : \"\
+                Chris Snyder\",\n  \"email\" : \"basilard99@gmail.com\",\n  \"userId\"\
+                : \"basilard99\",\n  \"linkedShopIds\": [\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\
+                ,\n        \"726c34d6-3e69-4788-a937-97e416c0626c\"\n  ],\n  \"_links\"\
+                : [\n        {\"self\": \"/users/7b99059f-62b1-4108-8a04-f7d906a8160d\"\
+                }\n  ]\n}\n#elseif($userId == \"cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"\
+                )\n{\n  \"name\": \"Jesse Busch\",\n  \"email\": \"jesse@nodomain.com\"\
+                ,\n  \"userId\": \"jbusch\",\n  \"linkedShopIds\": [\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\
+                ,\n  ],\n  \"_links\": [\n        {\"self\": \"/users/cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"\
+                }\n  ]\n}\n#end"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_templates"
+        type: "mock"
+    put:
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "User"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        204:
+          description: "204 response"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "204"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_templates"
+        type: "mock"
+definitions:
+  Shop:
+    type: "object"
+    required:
+    - "name"
+    - "primaryEmail"
+    properties:
+      name:
+        type: "string"
+        minLength: 3
+        maxLength: 40
+      primaryEmail:
+        type: "string"
+        format: "email"
+    title: "Shop Schema"
+  User:
+    type: "object"
+    required:
+    - "email"
+    - "linkedShopIds"
+    - "name"
+    - "userId"
+    properties:
+      name:
+        type: "string"
+        minLength: 1
+        maxLength: 255
+      email:
+        type: "string"
+        format: "email"
+      userId:
+        type: "string"
+        minLength: 1
+        maxLength: 40
+      linkedShopIds:
+        type: "array"
+        items:
           type: "string"
-        primaryEmail:
-          type: "string"
-          format: "email"
-        uuid:
-          maxLength: 36
           minLength: 36
-          type: "string"
-        _links:
-          type: "array"
-          items:
-            type: "object"
-            properties:
-              linkType:
-                type: "string"
-              link:
-                type: "string"
-    User:
-      title: "User Schema"
-      required:
-      - "email"
-      - "name"
-      - "uuid"
-      type: "object"
-      properties:
-        name:
-          maxLength: 255
-          minLength: 1
-          type: "string"
-        email:
-          type: "string"
-          format: "email"
-        userId:
           maxLength: 36
-          minLength: 36
-          type: "string"
-        uuid:
-          maxLength: 255
-          minLength: 1
-          type: "string"
-        linkedShopIds:
-          type: "array"
-          items:
-            maxLength: 36
-            minLength: 36
-            type: "string"
-        _links:
-          type: "array"
-          items:
-            type: "object"
-            properties:
-              linkType:
-                type: "string"
-              link:
-                type: "string"
+    title: "User Schema"
 x-amazon-apigateway-request-validators:
   Validate body:
     validateRequestParameters: false
