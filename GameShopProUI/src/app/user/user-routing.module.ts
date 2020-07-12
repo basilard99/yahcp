@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UserHeaderComponent } from './components/user-header/user-header.component';
+import { BaseUserComponent } from './components/base-user.component';
 
 
 const routes: Routes = [
-  { path: '', component: UserHeaderComponent }
+  { path: '', component: BaseUserComponent }
 ];
 
 @NgModule({
