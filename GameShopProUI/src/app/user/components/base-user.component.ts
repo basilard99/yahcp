@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserHeaderComponent } from './user-header/user-header.component';
 
 @Component({
   selector: 'app-base-user',
@@ -9,11 +11,16 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class BaseUserComponent implements OnInit {
+export class BaseUserComponent implements AfterViewInit {
 
-  constructor() { }
+  @ViewChild(UserHeaderComponent)
+  private userHeaderComponent: UserHeaderComponent;
 
-  ngOnInit(): void {
+  constructor(private activatedRoute: ActivatedRoute) { }
+
+  ngAfterViewInit(): void {
+    this.activatedRoute.params.subscribe(
+      params => (this.userHeaderComponent.SetUserId(params['id']))
+    );    
   }
-
 }

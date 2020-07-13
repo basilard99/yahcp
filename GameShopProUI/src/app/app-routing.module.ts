@@ -12,7 +12,7 @@ import { MaterialModule } from './material.module';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'user', loadChildren: () => import('./user/user.module').then(mod => mod.UserModule) }
+  { path: 'user/:id', loadChildren: () => import('./user/user.module').then(mod => mod.UserModule) }
 ];
 
 @NgModule({
