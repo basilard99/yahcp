@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { UserService } from '../../services/user/user.service';
 
@@ -10,16 +10,14 @@ import { UserService } from '../../services/user/user.service';
 })
 export class UserHeaderComponent {
 
-  // Private fields
-  private userId : string;
-
   // Public fields
-  public UserName$: Observable<string>;
+  public UserName$: Subject<string> = new Subject<string>();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   public SetUserId(id: string) {
-    this.userId = id;
-    this.UserName$ = this.userService.GetUserName(this.userId);
+    this.userService.GetUserName(id).subscribe(s => {
+      this.UserName$.next(s);
+    });
   }
 }
