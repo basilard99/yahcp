@@ -1,1 +1,18 @@
-<p>dashboard works!</p>
+<div fxLayout="row" fxLayoutAlign="space-around">
+    <mat-card class="checkIn-card" *ngFor="let ci of CheckIns$ | async">
+        <mat-card-header>
+            <mat-card-title>{{ci.ShopName}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="checkIn-content">
+            <div fxLayout="column">
+                <span class="checkIn-count">{{ci.NumberOfCheckIns}}</span>
+                <span class="checkIn-last-date">Last: {{ci.LastCheckIn.toLocaleString()}}</span>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="checkIn-actions" fxLayout="row" fxLayoutAlign="center">
+                <button mat-button>Check-In</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

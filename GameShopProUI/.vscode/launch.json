@@ -9,26 +9,38 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "trace":"verbose"
+        },
+        {
+          "type": "chrome",
+          "request": "launch",
+          "name": "Debug karma tests different",
+          "url": "http://localhost:9876/debug.html",
+          "webRoot": "${workspaceFolder}",
+          "runtimeArgs": [
+            "--headless"
+          ],
+          "sourceMaps": true,
+          "sourceMapPathOverrides": {
+            "webpack:/*": "${webRoot}/*",
+            "/./*": "${webRoot}/*",
+            "/src/*": "${webRoot}/*",
+            "/*": "*",
+            "/./~/*": "${webRoot}/node_modules/*"
+          },
+          "port": 9876
         },
         {
             "type": "chrome",
-            "request": "launch",
+            "request": "attach",
             "name": "Debug karma tests",
-            "url": "http://localhost:9876/debug.html",
-            "webRoot": "${workspaceFolder}",
-            "runtimeArgs": [
-              "--headless"
-            ],
-            "sourceMaps": true,
-            "sourceMapPathOverrides": {
-              "webpack:/*": "${webRoot}/*",
-              "/./*": "${webRoot}/*",
-              "/src/*": "${webRoot}/*",
-              "/*": "*",
-              "/./~/*": "${webRoot}/node_modules/*"
-            },
-            "port": 9223
+            "address": "localhost",
+            "port": 9333,
+            "pathMapping": {
+              "/": "${workspaceRoot}",
+              "/base/": "${workspaceRoot}/"
+            }
           }
     ]
 }
