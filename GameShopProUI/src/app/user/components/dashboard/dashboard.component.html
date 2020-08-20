@@ -11,7 +11,7 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="checkIn-actions" fxLayout="row" fxLayoutAlign="center">
-                <button mat-button>Check-In</button>
+                <button mat-button (click)="onCheckInClicked(ci.ShopName)">Check-In</button>
             </div>
         </mat-card-actions>
     </mat-card>

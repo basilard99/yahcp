@@ -13,6 +13,14 @@ export class CheckInService {
 
   constructor() { }
 
+  public AddCheckIn(storeName: string) {
+    let foundCheckIn = this.temporaryData.find(ci => ci.ShopName === storeName);
+    if (foundCheckIn !== undefined) {
+      foundCheckIn.NumberOfCheckIns++;
+      foundCheckIn.LastCheckIn = new Date();
+    }
+  }
+
   GetCheckIns(userId: string) : Observable<CheckIn[]> {
     return of(this.temporaryData);
   }

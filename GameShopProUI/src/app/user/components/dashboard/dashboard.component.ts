@@ -16,6 +16,10 @@ export class DashboardComponent implements OnInit {
 
   constructor(private checkInService: CheckInService) {};
 
+  public onCheckInClicked(storeName: string) {
+    this.checkInService.AddCheckIn(storeName);
+  }
+
   ngOnInit(): void {
    this.CheckIns$ = this.checkInService.GetCheckIns('TEMP');
   }

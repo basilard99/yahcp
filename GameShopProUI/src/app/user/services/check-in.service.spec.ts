@@ -8,6 +8,10 @@ const testScheduler = new TestScheduler((actual, expected) => {
   expect(actual).toEqual(expected);
 });
 
+const testSchedulerWithoutDates = new TestScheduler((actual, expected) => {
+  console.log(actual);
+})
+
 describe('CheckInService', () => {
   let service: CheckInService;
 
@@ -28,9 +32,28 @@ describe('CheckInService', () => {
             { ShopName: 'Dark Legion Games', NumberOfCheckIns: 2, LastCheckIn: new Date('2020-08-01T15:00:00') },
             { ShopName: 'Pyramid Gaming', NumberOfCheckIns: 5, LastCheckIn: new Date('2020-08-08T17:30:00') }
         ]
-      }
+      };
 
-      expectObservable(service.GetCheckIns('userId')).toBe('(a|)', values);
-    })
+      expectObservable(service.GetCheckIns('TEMP')).toBe('(a|)', values);
+    });
   });
+
+  it('should update the CheckIn observable AddCheckIn is called with valid name', () => {
+    testSchedulerWithoutDates.run(helpers => {
+      const { expectObservable } = helpers;
+      const values = {
+        a: [
+            { ShopName: 'Dark Legion Games', NumberOfCheckIns: 2, LastCheckIn: new Date('2020-08-01T15:00:00') },
+            { ShopName: 'Pyramid Gaming', NumberOfCheckIns: 5, LastCheckIn: new Date('2020-08-08T17:30:00') }
+        ]
+      };
+
+      let checkIns: CheckIn[];
+
+      service.GetCheckIns('TEMP').subscribe(s => checkIns = s);
+      service.AddCheckIn('Dark Legion Games');
+      expect(checkIns.find(p => p.ShopName === 'Dark Legion Games').NumberOfCheckIns).toBe(3);
+
+    });
+  })
 });
