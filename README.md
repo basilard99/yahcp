@@ -2,7 +2,7 @@
 Designed for both game store customers and game store owners, Gameshop Pro allows customers and store owners to work together to manage orders, check-ins, loyalty programs and more.
  
 ## User Personas
-### Dave - Indiscriminate Whale
+### Dave - Indiscriminate Whale ... (ed1bc51e-22c9-452f-b0b0-993b4c7be10e)
 Dave is a whale. That is, Dave spends a lot of money in the gaming hobby, but he doesn't really care about where he spends his money. Dave buys 
 a wide variety of things, more than the average shop stocks, so being able to special order things for him is very important. Plus, Dave hates 
 to see product that he's ordered sitting on the shelf in another store, so a store needs to get him product quickly and let him know whenever 
