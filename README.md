@@ -33,14 +33,14 @@ because he wants to make sure he likes the game before he buys.
 - Receive news blasts from the store
 
 ## Store Personas
-### Dark Legion Games
+### Dark Legion Games ... (7b213b3e-9fef-484d-92e2-255b7790ea8c)
 DLG is a small suburban store that focuses on selling board games with some RPGs and a line of popular miniatures. The owner/proprieter, Mary, runs the shop by 
 herself with the occasional help from trusted customers. Mary has a digital point of sale system and uses it to track her sales and run the discount program for 
 her customers. She doesn't have the personnel or technology to track customers much more than that and uses an old notebook to track special orders. This has 
 caused her to miss a few things, but her customers are loyal and understanding. Currently, her marketing is limited to social media. Finally, due to her small size,
 she doesn't get a very good dicount from her distributors and needs to keep everything as tight as possible.
 
-### Pyramid Gaming
+### Pyramid Gaming ... (b54329b7-1d7a-4f1d-a830-5f3209951d39)
 Pyramid is ran by two brothers, Mike and Jay. The store has been around for a long time and has built up a loyal customer base and carries both RPGs and board 
 games. Their miniature selection is limited to a few really popular lines. They buy used games but need to find a way to price and move items quickly. While 
 they don't run a diiscount program, they are known to give people a break when spending a big dollar amount. Marketing is limited to sporadic emails and social 
