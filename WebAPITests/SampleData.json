@@ -1,0 +1,25 @@
+{
+    "DisplayName": "Dave",
+    "Email": "dave@testexample.com",
+    "CheckIns": 
+    [
+        {
+            "Shop":
+            {
+                "Name": "Dark Legion Games",
+                "Id": "7b213b3e-9fef-484d-92e2-255b7790ea8c"
+            },
+            "NumberOfCheckIns": 3,
+            "LastCheckIn": "2020-07-13T20:20:39+00:00"
+        },
+        {
+            "Shop": 
+            {
+                "Name": "Pyramid Gaming",
+                "Id": "b54329b7-1d7a-4f1d-a830-5f3209951d39"
+            },
+            "NumberOfCheckIns": 14,
+            "LastCheckIn": "2020-08-22T16:30:00+00:00"
+        }
+    ]
+}

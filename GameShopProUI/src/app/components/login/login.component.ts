@@ -18,7 +18,7 @@ export class LoginComponent {
   submit() {
     if (this.tempValidateUser(this.form.get('username').value, this.form.get('password').value)) {
       this.error = null;
-      this.router.navigate(['/user/61430f8c-fb73-468e-9064-448598c189d9']);
+      this.router.navigate(['/customer/ed1bc51e-22c9-452f-b0b0-993b4c7be10e']);
     }
     else {
       this.error = "Wah-wah-wah!!";
@@ -26,7 +26,7 @@ export class LoginComponent {
   }
 
   private tempValidateUser(name: string, password: string): boolean {
-    return ((name === 'Rico') && (password === 'abc'));
+    return ((name === 'Dave') && (password === 'abc'));
   }
 
   @Input() error: string | null;

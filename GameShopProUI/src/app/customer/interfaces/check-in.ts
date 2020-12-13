@@ -1,5 +1,5 @@
 export interface CheckIn {
     ShopName: string;
-    NumberOfCheckins: number;
+    NumberOfCheckIns: number;
     LastCheckIn: Date;    
 }
