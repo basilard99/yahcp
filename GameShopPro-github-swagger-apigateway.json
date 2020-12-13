@@ -10,6 +10,42 @@
     "https"
   ],
   "paths": {
+    "/customers": {
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "204 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Allow": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "204": {
+              "statusCode": "204",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Allow": "'GET, HEAD, POST'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 204}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      }
+    },
     "/customers/{customerId}": {
       "get": {
         "consumes": [

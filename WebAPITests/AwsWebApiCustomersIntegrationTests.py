@@ -5,11 +5,16 @@ import sys
 
 BASE_URL = 'https://udiuhnbfvf.execute-api.us-east-2.amazonaws.com/Test'
 
+class CustomersFunctionalTest(unittest.TestCase):
+    def test_options_returns_verbs_and_204(self):
+        r = requests.options(url = BASE_URL + '/customers', headers={'user-agent':'testApp/0.0.1'})
+        allowedVerbs = r.headers['Allow'].replace(' ','').split(',')
+        self.assertTrue(len(allowedVerbs) == 3, f'Header count is {len(allowedVerbs)}')
+        self.assertTrue('GET' in allowedVerbs, 'GET is not in allowed list')
+        self.assertTrue('HEAD' in allowedVerbs, 'HEAD is not in allowed list')
+        self.assertTrue('POST' in allowedVerbs, 'POST is not in allowed list')
+
 class GetFunctionalTests(unittest.TestCase):
-
-    # /Customers/<customerId>
-
-    #  [GET]
     def test_getting_returns_code_200_and_list_of_json_objects(self):
         r = requests.get(url = BASE_URL + '/customers/ed1bc51e-22c9-452f-b0b0-993b4c7be10e')
         results = r.json()
