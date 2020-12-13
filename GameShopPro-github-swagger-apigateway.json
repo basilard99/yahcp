@@ -1,0 +1,579 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2020-09-01T01:23:33Z",
+    "title": "GameShopPro"
+  },
+  "host": "udiuhnbfvf.execute-api.us-east-2.amazonaws.com",
+  "basePath": "/github",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/customers/{customerId}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "404 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "200": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "application/json": "{\n    \"DisplayName\": \"Dave\",\n    \"Email\": \"dave@testexample.com\",\n    \"CheckIns\": \n    [\n        {\n            \"Shop\":\n            {\n                \"Name\": \"Dark Legion Games\",\n                \"Id\": \"7b213b3e-9fef-484d-92e2-255b7790ea8c\"\n            },\n            \"NumberOfCheckIns\": 3,\n            \"LastCheckIn\": \"2020-07-13T20:20:39+00:00\"\n        },\n        {\n            \"Shop\": \n            {\n                \"Name\": \"Pyramid Gaming\",\n                \"Id\": \"b54329b7-1d7a-4f1d-a830-5f3209951d39\"\n            },\n            \"NumberOfCheckIns\": 14,\n            \"LastCheckIn\": \"2020-08-22T16:30:00+00:00\"\n        }\n    ]\n}"
+              }
+            },
+            "404": {
+              "statusCode": "404",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\n  #if($input.params('customerId') == 'ed1bc51e-22c9-452f-b0b0-993b4c7be10e')\n    \"statusCode\": 200\n  #else\n    \"statusCode\": 404\n  #end\n}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      },
+      "patch": {
+        "consumes": [
+          "application/json",
+          "application/json-patch+json"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "JsonPatchValidationModel",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JsonPatchValidationModel"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "204 response"
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate body",
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "204"
+            }
+          },
+          "requestTemplates": {
+            "application/json-patch+json": "{\"statusCode\": 204}"
+          },
+          "passthroughBehavior": "never"
+        }
+      }
+    },
+    "/shops": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Shop"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "[\n    {\n        \"name\": \"Phantom of the Attic\",\n        \"primaryEmail\":\"test@pota.com\",\n        \"_links\": [\n            {\n                \"self\":\"/Test/shops/9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\n            }\n        ]\n    },\n     {\n        \"name\": \"Drawbridge Games\",\n        \"primaryEmail\":\"test@drawbridgegames.com\",\n        \"_links\": [\n            {\n                \"self\":\"/Test/shops/726c34d6-3e69-4788-a937-97e416c0626c\"\n            }\n        ]\n    }\n]"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Shop",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Shop"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "201 response",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate body",
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "201",
+              "responseParameters": {
+                "method.response.header.Location": "'/shops/726c34d6-3e69-4788-a937-97e416c0626c'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      }
+    },
+    "/shops/{shopId}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Shop"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "#set($shopId = $input.params('shopId'))\n#if($shopId == \"726c34d6-3e69-4788-a937-97e416c0626c\")\n{\n  \"name\": \"Drawbridge Games\",\n  \"primaryEmail\": \"test@drawbridgegames.com\",\n  \"_links\": [\n        {\"self\":\"/Test/shops/726c34d6-3e69-4788-a937-97e416c0626c\"}\n    ]\n}\n#elseif($shopId == \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\")\n{\n  \"name\" : \"Phantom of the Attic\",\n  \"primaryEmail\" : \"test@pota.com\",\n  \"_links\": [\n    {\"self\":\"/Test/shops/9b70ba73-165c-44b4-a0a0-3acffaab19b7\"}\n  ]\n}\n#end"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Shop",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Shop"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "204 response"
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate body",
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "204"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "[\n {\n    \"name\": \"Chris Snyder\",\n    \"email\":\"basilard99@gmail.com\",\n    \"userId\":\"basilard99\",\n    \"linkedShopIds\":[\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\",\n        \"726c34d6-3e69-4788-a937-97e416c0626c\"\n    ],\n    \"_links\":[\n        {\"self\":\"/users/7b99059f-62b1-4108-8a04-f7d906a8160d\"}\n    ]\n },\n {\n    \"name\": \"Jesse Busch\",\n    \"email\":\"jesse@nodomain.com\",\n    \"userId\":\"jbusch\",\n    \"linkedShopIds\":[\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\"\n    ],\n    \"_links\":[\n        {\"self\":\"/users/cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"}\n    ]\n }\n]"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "User",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "201 response",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate body",
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "201",
+              "responseParameters": {
+                "method.response.header.Location": "'/user/7b99059f-62b1-4108-8a04-f7d906a8160d'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "#set($userId = $input.params('userId'))\n#if($userId == \"7b99059f-62b1-4108-8a04-f7d906a8160d\")\n{\n  \"name\" : \"Chris Snyder\",\n  \"email\" : \"basilard99@gmail.com\",\n  \"userId\": \"basilard99\",\n  \"linkedShopIds\": [\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\",\n        \"726c34d6-3e69-4788-a937-97e416c0626c\"\n  ],\n  \"_links\": [\n        {\"self\": \"/users/7b99059f-62b1-4108-8a04-f7d906a8160d\"}\n  ]\n}\n#elseif($userId == \"cbd22a8f-31d6-42f7-81d9-cfff3e604b14\")\n{\n  \"name\": \"Jesse Busch\",\n  \"email\": \"jesse@nodomain.com\",\n  \"userId\": \"jbusch\",\n  \"linkedShopIds\": [\n        \"9b70ba73-165c-44b4-a0a0-3acffaab19b7\",\n  ],\n  \"_links\": [\n        {\"self\": \"/users/cbd22a8f-31d6-42f7-81d9-cfff3e604b14\"}\n  ]\n}\n#end"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "User",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "204 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "responses": {
+            "default": {
+              "statusCode": "204"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_templates"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Shop": {
+      "type": "object",
+      "required": [
+        "name",
+        "primaryEmail"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/TypeShopName"
+        },
+        "primaryEmail": {
+          "type": "string",
+          "format": "email"
+        }
+      },
+      "title": "Shop Schema"
+    },
+    "JsonPatchValidationModel": {
+      "title": "Shopper Schema",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "type": "string",
+            "enum": [
+              "add",
+              "remove",
+              "replace",
+              "copy",
+              "move",
+              "test"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "op",
+          "path"
+        ]
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": [
+        "email",
+        "linkedShopIds",
+        "name",
+        "userId"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "linkedShopIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 36,
+            "maxLength": 36
+          }
+        }
+      },
+      "title": "User Schema"
+    },
+    "Customer": {
+      "type": "object",
+      "required": [
+        "DisplayName",
+        "Email"
+      ],
+      "properties": {
+        "DisplayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "Email": {
+          "type": "string",
+          "format": "email"
+        },
+        "CheckIns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeCheckIn"
+          }
+        }
+      },
+      "title": "Customer Schema"
+    },
+    "TypeCheckIn": {
+      "type": "object",
+      "required": [
+        "LastCheckIn",
+        "Shop"
+      ],
+      "properties": {
+        "Shop": {
+          "type": "object",
+          "properties": {
+            "Name": {
+              "$ref": "#/definitions/TypeShopName"
+            },
+            "Id": {
+              "$ref": "#/definitions/TypeUUID"
+            }
+          },
+          "required": [
+            "Id",
+            "Name"
+          ]
+        },
+        "NumberOfCheckIns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "LastCheckIn": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "TypeShopName": {
+      "type": "string"
+    },
+    "TypeUUID": {
+      "type": "string"
+    }
+  },
+  "x-amazon-apigateway-request-validators": {
+    "Validate body": {
+      "validateRequestParameters": false,
+      "validateRequestBody": true
+    }
+  }
+}

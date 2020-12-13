@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserHeaderComponent } from './user-header.component';
-import { UserService } from '../../services/user/user.service';
+import { CustomerHeaderComponent } from './customer-header.component';
+import { CustomerService } from '../../services/customer/customer.service';
 import { of, Observable } from 'rxjs';
 
 describe('UserHeaderComponent', () => {  
-  let component: UserHeaderComponent;
-  let userServiceStub: Partial<UserService>;  
-  let fixture: ComponentFixture<UserHeaderComponent>;
+  let component: CustomerHeaderComponent;
+  let userServiceStub: Partial<CustomerService>;  
+  let fixture: ComponentFixture<CustomerHeaderComponent>;
 
-  let userService: UserService;
+  let userService: CustomerService;
 
   beforeEach(() => {
 
@@ -20,13 +20,13 @@ describe('UserHeaderComponent', () => {
     }
 
     TestBed.configureTestingModule({
-      declarations: [ UserHeaderComponent ],
-      providers: [ { provide: UserService, useValue: userServiceStub } ]
+      declarations: [ CustomerHeaderComponent ],
+      providers: [ { provide: CustomerService, useValue: userServiceStub } ]
     });
 
-    fixture = TestBed.createComponent(UserHeaderComponent);
+    fixture = TestBed.createComponent(CustomerHeaderComponent);
     component = fixture.componentInstance;
-    userService = TestBed.inject(UserService);
+    userService = TestBed.inject(CustomerService);
   });
 
   it('should create', () => {

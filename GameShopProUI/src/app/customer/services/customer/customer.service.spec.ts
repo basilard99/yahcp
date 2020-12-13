@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { TestScheduler } from 'rxjs/testing';
 
-import { UserService } from './user.service';
+import { CustomerService } from './customer.service';
 
 const testScheduler = new TestScheduler((actual, expected) => {
   expect(actual).toEqual(expected);
 });
 
 describe('UserService', () => {
-  let service: UserService;
+  let service: CustomerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UserService);
+    service = TestBed.inject(CustomerService);
   });
 
   it('should be created', () => {
