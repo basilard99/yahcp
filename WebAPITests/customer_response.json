@@ -1,0 +1,169 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+      "typeLink": {
+        "title": "Link Object",
+        "description": "A Link Object represents a hyperlink from the containing resource to a URI.",
+        "type": "object",
+        "required": [
+          "href"
+        ],
+        "properties": {
+          "href": {
+            "description": "Its value is either a URI [RFC3986] or a URI Template [RFC6570]. If the value is a URI Template then the Link Object SHOULD have a \"templated\" attribute whose value is true.",
+            "type": "string"
+          },
+          "templated": {
+            "description": "Its value is boolean and SHOULD be true when the Link Object's \"href\" property is a URI Template. Its value SHOULD be considered false if it is undefined or any other value than true.",
+            "type": "boolean"
+          },
+          "type": {
+            "description": "Its value is a string used as a hint to indicate the media type expected when dereferencing the target resource.",
+            "type": "string"
+          },
+          "deprecation": {
+            "description": "Its presence indicates that the link is to be deprecated (i.e. removed) at a future date. Its value is a URL that SHOULD provide further information about the deprecation. A client SHOULD provide some notification (for example, by logging a warning message) whenever it traverses over a link that has this property. The notification SHOULD include the deprecation property's value so that a client maintainer can easily find information about the deprecation.",
+            "type": "string"
+          },
+          "name": {
+            "description": "Its value MAY be used as a secondary key for selecting Link Objects which share the same relation type.",
+            "type": "string"
+          },
+          "profile": {
+            "description": "Its value is a string which is a URI that hints about the profile [RFC6906] of the target resource.",
+            "type": "string"
+          },
+          "title": {
+            "description": "Its value is a string and is intended for labelling the link with a human-readable identifier (as defined by [RFC5988]).",
+            "type": "string"
+          },
+          "hreflang": {
+            "description": "Its value is a string and is intended for indicating the language of the target resource (as defined by [RFC5988]).",
+            "type": "string"
+          },
+          "verb": {
+            "description": "The HTTP verb used when execuuting this action.",
+            "type": "string",
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE"
+            ]
+          }
+        }
+      },
+      "typeLinks": {
+        "type": "object",
+        "properties": {
+          "self": {
+            "$ref": "#/definitions/typeLink"
+          }
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/typeLink"
+            },
+            {
+              "type": "array",
+              "items": [
+                {
+                  "$ref": "#/definitions/typeLink"
+                }
+              ]
+            }
+          ]
+        },
+        "required": [
+          "self"
+        ]
+      },
+      "typeShopName": {
+        "type": "string"
+      },
+      "typeUUID": {
+        "type": "string"
+      }
+    },
+    "title": "CustomerResponseType",
+    "description": "The response when a Customer is retrieved",
+    "type": "object",
+    "properties": {
+      "_links": {
+        "$ref": "#/definitions/typeLinks"
+      },
+      "displayName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 255
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      },
+      "_embedded": {
+        "type": "object",
+        "properties": {
+          "checkIns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_links": {
+                  "$ref": "#/definitions/typeLinks"
+                },
+                "_embedded": {
+                  "type": "object",
+                  "properties": {
+                    "shop": {
+                      "type": "object",
+                      "properties": {
+                        "_links": {
+                          "$ref": "#/definitions/typeLinks"
+                        },
+                        "name": {
+                          "$ref": "#/definitions/typeShopName" 
+                        },
+                        "id": {
+                          "$ref": "#/definitions/typeUUID"
+                        }
+                      },
+                      "required": [
+                        "_links",
+                        "name",
+                        "id"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "shop"
+                  ]
+                },
+                "numberOfCheckIns": {
+                  "type": "integer",
+                  "minimum": 0.0
+                },
+                "lastCheckIn": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "_links",
+                "_embedded",
+                "numberOfCheckIns",
+                "lastCheckIn"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "required": [
+      "_links",
+      "displayName",
+      "email"
+    ]
+  }

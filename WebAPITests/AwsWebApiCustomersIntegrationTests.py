@@ -2,6 +2,7 @@ import unittest
 import requests
 import json
 import sys
+from jsonschema import validate
 
 BASE_URL = 'https://udiuhnbfvf.execute-api.us-east-2.amazonaws.com/Test'
 
@@ -15,6 +16,25 @@ class CustomersFunctionalTest(unittest.TestCase):
         self.assertTrue('POST' in allowedVerbs, 'POST is not in allowed list')
 
 class GetFunctionalTests(unittest.TestCase):
+    def test_getting_returns_200_and_valid_json_hal_schema(self):
+        r = requests.get(url = BASE_URL + '/customers/ed1bc51e-22c9-452f-b0b0-993b4c7be10e')
+        self.assertTrue(r.status_code == 200, f'Actual status code: {r.status_code}')
+
+        f = open('json_hal_schema.json')
+        schema = json.load(f)
+        validate(instance=r.json(), schema=schema)
+        f.close()
+
+    def test_getting_returns_200_and_valid_customer_response_schema(self):
+        r = requests.get(url = BASE_URL + '/customers/ed1bc51e-22c9-452f-b0b0-993b4c7be10e')
+        self.assertTrue(r.status_code == 200, f'Actual status code: {r.status_code}')
+
+        f = open('customer_response.json')
+        data = json.load(f)
+        validate(instance=r.json(), schema=data)
+        f.close()        
+
+    @unittest.skip('Still trying to decide if I want to have this test')
     def test_getting_returns_code_200_and_list_of_json_objects(self):
         r = requests.get(url = BASE_URL + '/customers/ed1bc51e-22c9-452f-b0b0-993b4c7be10e')
         results = r.json()
@@ -34,7 +54,7 @@ class GetFunctionalTests(unittest.TestCase):
         self.assertTrue(checkIn2['NumberOfCheckIns'] == 14)
         self.assertTrue(checkIn2['LastCheckIn'] == '2020-08-22T16:30:00+00:00')
 
-    def test_getting_checkins_with_invalid_name_returns_404(self):
+    def test_getting_with_invalid_id_returns_404(self):
         r = requests.get(url = BASE_URL + '/customers/abc')
         self.assertTrue(r.status_code == 404)
 

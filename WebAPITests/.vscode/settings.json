@@ -1,3 +1,13 @@
 {
-    "python.pythonPath": "C:\\Users\\Chris Snyder\\.virtualenvs\\WebAPITests-PCGxKkRI\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\basil\\.virtualenvs\\WebAPITests-YEFZMr_9\\Scripts\\python.exe",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-p",
+        "*Tests.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true
 }
